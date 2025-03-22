@@ -8,6 +8,7 @@ import Impact from '@/components/Impact';
 import Team from '@/components/Team';
 import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
+import ScaleIn from '@/components/animations/ScaleIn';
 
 const Index = () => {
   // Smooth scroll to section when clicking on anchor links
@@ -43,7 +44,9 @@ const Index = () => {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main>
-        <Hero />
+        <ScaleIn duration={0.8} scale={0.95}>
+          <Hero />
+        </ScaleIn>
         <AboutUs />
         <Programs />
         <Impact />

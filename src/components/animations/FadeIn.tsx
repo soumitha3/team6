@@ -1,6 +1,7 @@
 
-import React, { useRef, useEffect, useState } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
+import { useScrollAnimation } from './useScrollAnimation';
 
 interface FadeInProps {
   children: React.ReactNode;
@@ -19,34 +20,7 @@ const FadeIn: React.FC<FadeInProps> = ({
   threshold = 0.1,
   duration = 0.6,
 }) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold,
-        rootMargin: '0px 0px -100px 0px',
-      }
-    );
-
-    const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [threshold]);
+  const { ref, isVisible } = useScrollAnimation<HTMLDivElement>({ threshold });
 
   const getDirectionStyles = () => {
     if (!isVisible) {
