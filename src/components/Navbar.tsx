@@ -13,7 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('login');
+  const [activeTab, setActiveTab] = useState<'login' | 'register'>('login');
 
   useEffect(() => {
     const handleScroll = () => {

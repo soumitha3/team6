@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Lock, User, Github, Linkedin } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogHeader } from '@/components/ui/dialog';
@@ -18,7 +19,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
   onClose, 
   defaultTab = 'login' 
 }) => {
-  const [activeTab, setActiveTab] = useState(defaultTab);
+  const [activeTab, setActiveTab] = useState<'login' | 'register'>(defaultTab);
   
   // Update activeTab when defaultTab prop changes
   useEffect(() => {
@@ -39,7 +40,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
           </DialogDescription>
         </DialogHeader>
         
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <Tabs value={activeTab} onValueChange={(value: 'login' | 'register') => setActiveTab(value)} className="w-full">
           <TabsList className="grid grid-cols-2 mb-6">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="register">Register</TabsTrigger>
