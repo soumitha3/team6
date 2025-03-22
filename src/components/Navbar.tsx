@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import AuthModal from './ui/AuthModal';
+import { Button } from './ui/button';
 
 interface NavbarProps {
   transparent?: boolean;
@@ -12,6 +13,7 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState('login');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +26,16 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const openLoginModal = () => {
+    setActiveTab('login');
+    setAuthModalOpen(true);
+  };
+
+  const openRegisterModal = () => {
+    setActiveTab('register');
+    setAuthModalOpen(true);
   };
 
   const navLinks = [
@@ -58,13 +70,22 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
             ))}
           </nav>
 
-          <div className="hidden md:flex items-center">
-            <button 
-              onClick={() => setAuthModalOpen(true)}
+          <div className="hidden md:flex items-center space-x-4">
+            <Button 
+              variant="ghost" 
+              className="flex items-center gap-2" 
+              onClick={openLoginModal}
+            >
+              <LogIn size={18} />
+              Login
+            </Button>
+            
+            <Button 
+              onClick={openRegisterModal}
               className="primary-btn"
             >
-              Login / Register
-            </button>
+              Apply Now
+            </Button>
           </div>
 
           {/* Mobile Navigation Toggle */}
@@ -91,20 +112,38 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
                 {link.name}
               </a>
             ))}
-            <button 
-              onClick={() => {
-                setAuthModalOpen(true);
-                setMobileMenuOpen(false);
-              }}
-              className="primary-btn mt-2 w-full"
-            >
-              Login / Register
-            </button>
+            <div className="flex flex-col space-y-3 mt-2">
+              <Button 
+                variant="ghost" 
+                className="flex items-center justify-center gap-2 w-full" 
+                onClick={() => {
+                  openLoginModal();
+                  setMobileMenuOpen(false);
+                }}
+              >
+                <LogIn size={18} />
+                Login
+              </Button>
+              
+              <Button 
+                onClick={() => {
+                  openRegisterModal();
+                  setMobileMenuOpen(false);
+                }}
+                className="primary-btn w-full"
+              >
+                Apply Now
+              </Button>
+            </div>
           </nav>
         </div>
       </header>
 
-      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+      <AuthModal 
+        isOpen={authModalOpen} 
+        onClose={() => setAuthModalOpen(false)} 
+        defaultTab={activeTab}
+      />
     </>
   );
 };

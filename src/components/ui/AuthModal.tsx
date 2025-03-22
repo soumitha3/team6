@@ -1,5 +1,4 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Mail, Lock, User, Github, Linkedin } from 'lucide-react';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogHeader } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -11,10 +10,22 @@ import { cn } from '@/lib/utils';
 interface AuthModalProps {
   isOpen: boolean;
   onClose: () => void;
+  defaultTab?: 'login' | 'register';
 }
 
-const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose }) => {
-  const [activeTab, setActiveTab] = useState('login');
+const AuthModal: React.FC<AuthModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  defaultTab = 'login' 
+}) => {
+  const [activeTab, setActiveTab] = useState(defaultTab);
+  
+  // Update activeTab when defaultTab prop changes
+  useEffect(() => {
+    if (defaultTab) {
+      setActiveTab(defaultTab);
+    }
+  }, [defaultTab]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
