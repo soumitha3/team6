@@ -7,7 +7,7 @@ import Programs from '@/components/Programs';
 import Impact from '@/components/Impact';
 import Team from '@/components/Team';
 import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
+
 import ScaleIn from '@/components/animations/ScaleIn';
 
 const Index = () => {
@@ -53,7 +53,7 @@ const Index = () => {
         <Team />
         <Contact />
       </main>
-      <Footer />
+      
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, LogIn } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import AuthModal from './ui/AuthModal';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
 
 interface NavbarProps {
   transparent?: boolean;
@@ -24,6 +24,16 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    const handleOpenApplyNow = () => {
+      setActiveTab('register');
+      setAuthModalOpen(true);
+    };
+
+    window.addEventListener('openApplyNow', handleOpenApplyNow);
+    return () => window.removeEventListener('openApplyNow', handleOpenApplyNow);
+  }, []);
+
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
   };
@@ -42,7 +52,7 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
     { name: 'About Us', href: '#about' },
     { name: 'Programs', href: '#programs' },
     { name: 'Impact', href: '#impact' },
-    { name: 'Leadership', href: '#team' },
+    { name: 'Our Team', href: '#team' },
     { name: 'Contact', href: '#contact' },
   ];
 
@@ -57,8 +67,10 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
         )}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          <a href="#" className="text-2xl font-bold text-foreground">
-            elegantUX<span className="text-primary">.</span>
+          {/* Logo */}
+          <a href="#" className="flex items-center">
+            <img src="https://ishanyaindia.org/wp-content/uploads/2021/05/Ishanya_logo_NEW-1024x1024.png" alt="Logo" className="h-16 w-auto" />
+            <span className="ml-2 text-2xl font-bold text-foreground">Ishanya India Foundation</span>
           </a>
 
           {/* Desktop Navigation */}
@@ -73,7 +85,7 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
           <div className="hidden md:flex items-center space-x-4">
             <Button 
               variant="ghost" 
-              className="flex items-center gap-2" 
+              className="flex items-center gap-2 btn-transition" 
               onClick={openLoginModal}
             >
               <LogIn size={18} />
@@ -82,7 +94,8 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
             
             <Button 
               onClick={openRegisterModal}
-              className="primary-btn"
+              className="primary-btn btn-transition"
+              id="applynow"
             >
               Apply Now
             </Button>
@@ -90,7 +103,7 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
 
           {/* Mobile Navigation Toggle */}
           <button className="md:hidden text-foreground" onClick={toggleMobileMenu}>
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} /> }
           </button>
         </div>
 
@@ -115,7 +128,7 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
             <div className="flex flex-col space-y-3 mt-2">
               <Button 
                 variant="ghost" 
-                className="flex items-center justify-center gap-2 w-full" 
+                className="flex items-center justify-center gap-2 w-full btn-transition" 
                 onClick={() => {
                   openLoginModal();
                   setMobileMenuOpen(false);
@@ -130,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({ transparent = true }) => {
                   openRegisterModal();
                   setMobileMenuOpen(false);
                 }}
-                className="primary-btn w-full"
+                className="primary-btn w-full btn-transition"
               >
                 Apply Now
               </Button>

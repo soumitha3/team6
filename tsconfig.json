@@ -6,14 +6,21 @@
   ],
   "compilerOptions": {
     "baseUrl": ".",
+    "allowJs": true,      // Allow JavaScript files in the project
+    "checkJs": false,     // Disable TypeScript checking for JS files
+    "jsx": "react-jsx",   // Support JSX syntax
+    "skipLibCheck": true, // Skip type checking for node_modules
+    "noEmit": true  ,  
     "paths": {
       "@/*": ["./src/*"]
     },
+    
     "noImplicitAny": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
-    "allowJs": true,
+
     "noUnusedLocals": false,
-    "strictNullChecks": false
+    "strictNullChecks": false,
+    
   }
 }
